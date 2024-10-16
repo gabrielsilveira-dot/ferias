@@ -3,46 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opções de Férias 40ª Cia</title>
+    <title>Formulário de Férias - Policiais Militares de Minas Gerais</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
+            margin: 20px;
             padding: 20px;
+            background-color: #f4f4f4;
         }
         h1 {
-            text-align: center;
             color: #333;
         }
-        form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: auto;
+        .form-group {
+            margin-bottom: 15px;
         }
         label {
             display: block;
-            margin-bottom: 10px;
-            color: #555;
+            margin-bottom: 5px;
         }
-        input[type="text"], select {
+        select, input[type="text"], button {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            margin: 5px 0;
         }
         button {
             background-color: #28a745;
             color: white;
-            padding: 10px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            width: 100%;
         }
         button:hover {
             background-color: #218838;
@@ -51,63 +39,159 @@
 </head>
 <body>
 
-    <h1>Opções de Férias 40ª Cia</h1>
-    <form id="myForm" method="POST">
-        <label for="numeroPM">Número de Polícia:</label>
-        <input type="text" id="numeroPM" name="numeroPM" required>
+<h1>Formulário de Férias</h1>
 
-        <label for="nome">Nome Militar:</label>
-        <input type="text" id="nome" name="nome" required>
+<form id="feriasForm">
+    <div class="form-group">
+        <label for="numeroPolicia">Número de Polícia:</label>
+        <input type="text" id="numeroPolicia" required>
+    </div>
+    <div class="form-group">
+        <label for="nomeMilitar">Nome Militar:</label>
+        <input type="text" id="nomeMilitar" required>
+    </div>
+    <div class="form-group">
+        <label for="postoGraduacao">Posto ou Graduação:</label>
+        <input type="text" id="postoGraduacao" required>
+    </div>
 
-        <label for="opcao1">Opção de Férias 1:</label>
-        <select id="opcao1" name="opcao1" required>
-            <option value="">Selecione uma data</option>
-            <option value="01/01/2025">01/01/2025</option>
-            <option value="15/01/2025">15/01/2025</option>
-            <option value="01/02/2025">01/02/2025</option>
-        </select>
+    <h3>Escolha suas datas de férias</h3>
+    <div id="optionsContainer"></div>
+    
+    <button type="button" id="addChoice">Adicionar Escolha</button>
+    <button type="button" id="finalizar">Finalizar</button>
+</form>
 
-        <label for="opcao2">Opção de Férias 2:</label>
-        <select id="opcao2" name="opcao2" required>
-            <option value="">Selecione uma data</option>
-            <option value="01/01/2025">01/01/2025</option>
-            <option value="15/01/2025">15/01/2025</option>
-            <option value="01/02/2025">01/02/2025</option>
-        </select>
+<script>
+    const optionsContainer = document.getElementById('optionsContainer');
+    let escolhaContador = 0;
 
-        <label for="opcao3">Opção de Férias 3:</label>
-        <select id="opcao3" name="opcao3" required>
-            <option value="">Selecione uma data</option>
-            <option value="01/01/2025">01/01/2025</option>
-            <option value="15/01/2025">15/01/2025</option>
-            <option value="01/02/2025">01/02/2025</option>
-        </select>
+    // Dados das férias
+    const datas25Dias = [
+        { periodo: "01", inicio: "02/01/2025", termino: "05/02/2025" },
+        { periodo: "02", inicio: "06/02/2025", termino: "19/03/2025" },
+        { periodo: "03", inicio: "19/03/2025", termino: "24/04/2025" },
+        { periodo: "04", inicio: "25/04/2025", termino: "30/05/2025" },
+        { periodo: "05", inicio: "02/06/2025", termino: "07/07/2025" },
+        { periodo: "06", inicio: "08/07/2025", termino: "11/08/2025" },
+        { periodo: "07", inicio: "12/08/2025", termino: "15/09/2025" },
+        { periodo: "08", inicio: "16/09/2025", termino: "20/10/2025" },
+        { periodo: "09", inicio: "21/10/2025", termino: "25/11/2025" },
+        { periodo: "10", inicio: "26/11/2025", termino: "31/12/2025" },
+    ];
 
-        <button type="submit">Finalizar</button>
-    </form>
+    const datas15Dias = [
+        { periodo: "01", inicio: "02/01/2025", termino: "22/01/2025" },
+        { periodo: "01.1", inicio: "16/01/2025", termino: "05/02/2025" },
+        { periodo: "02", inicio: "06/02/2025", termino: "26/02/2025" },
+        { periodo: "03", inicio: "19/03/2025", termino: "08/04/2025" },
+        { periodo: "04", inicio: "25/04/2025", termino: "16/05/2025" },
+        { periodo: "05", inicio: "02/06/2025", termino: "23/06/2025" },
+        { periodo: "06", inicio: "08/07/2025", termino: "28/07/2025" },
+        { periodo: "07", inicio: "12/08/2025", termino: "01/09/2025" },
+        { periodo: "08", inicio: "16/09/2025", termino: "06/10/2025" },
+        { periodo: "09", inicio: "21/10/2025", termino: "10/11/2025" },
+        { periodo: "10", inicio: "26/11/2025", termino: "16/12/2025" },
+    ];
 
-    <script>
-        const form = document.getElementById('myForm');
-        const url = 'https://script.google.com/macros/s/AKfycbzoVB3KRwAp3Oj3MGc2nCGIFKir3F4eNVv68DfyhCBVXA3mdNfGFQphp6HpXLI4t-rZPg/exec'; // Substitua pela URL do seu script
+    const datas10Dias = [
+        { periodo: "01", inicio: "02/01/2025", termino: "15/01/2025" },
+        { periodo: "01.1", inicio: "23/01/2025", termino: "05/02/2025" },
+        { periodo: "02", inicio: "06/02/2025", termino: "19/02/2025" },
+        { periodo: "02.1", inicio: "13/02/2025", termino: "26/02/2025" },
+        { periodo: "03", inicio: "06/03/2025", termino: "19/03/2025" },
+        { periodo: "04", inicio: "25/04/2025", termino: "09/05/2025" },
+        { periodo: "04.1", inicio: "19/05/2025", termino: "30/05/2025" },
+        { periodo: "05", inicio: "02/06/2025", termino: "13/06/2025" },
+        { periodo: "05.1", inicio: "24/06/2025", termino: "07/07/2025" },
+        { periodo: "06", inicio: "08/07/2025", termino: "21/07/2025" },
+        { periodo: "06.1", inicio: "29/07/2025", termino: "11/08/2025" },
+        { periodo: "07", inicio: "12/08/2025", termino: "25/08/2025" },
+        { periodo: "08", inicio: "16/09/2025", termino: "29/09/2025" },
+        { periodo: "09", inicio: "21/10/2025", termino: "03/11/2025" },
+        { periodo: "10", inicio: "26/11/2025", termino: "09/12/2025" },
+    ];
 
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
+    function addOptions() {
+        if (escolhaContador < 3) {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'form-group';
 
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                });
+            const button25 = document.createElement('button');
+            button25.innerText = "Escolher 25 Dias";
+            button25.onclick = function() {
+                addDateOptions(datas25Dias);
+                escolhaContador++;
+            };
+            optionDiv.appendChild(button25);
 
-                const result = await response.text();
-                alert(result);
-            } catch (error) {
-                alert("Erro ao enviar dados: " + error.message);
-            }
+            const buttonDividida = document.createElement('button');
+            buttonDividida.innerText = "Escolher 10 ou 15 Dias";
+            buttonDividida.onclick = function() {
+                addDateOptions(datas10Dias);
+                addDateOptions(datas15Dias);
+                escolhaContador++;
+            };
+            optionDiv.appendChild(buttonDividida);
+
+            optionsContainer.appendChild(optionDiv);
+        } else {
+            alert("Você já fez suas 3 escolhas!");
+        }
+    }
+
+    function addDateOptions(dataArray) {
+        const select = document.createElement('select');
+        select.required = true;
+        select.innerHTML = "<option value=''>Selecione uma data</option>";
+
+        dataArray.forEach(data => {
+            const option = document.createElement('option');
+            option.value = data.periodo;
+            option.innerText = `${data.inicio} - ${data.termino} (Período ${data.periodo})`;
+            select.appendChild(option);
+        });
+
+        optionsContainer.appendChild(select);
+    }
+
+    document.getElementById('addChoice').addEventListener('click', addOptions);
+
+    document.getElementById('finalizar').addEventListener('click', function() {
+        const numeroPolicia = document.getElementById('numeroPolicia').value;
+        const nomeMilitar = document.getElementById('nomeMilitar').value;
+        const postoGraduacao = document.getElementById('postoGraduacao').value;
+
+        const selections = Array.from(optionsContainer.getElementsByTagName('select'))
+            .map(select => select.value);
+
+        const formData = {
+            numeroPolicia,
+            nomeMilitar,
+            postoGraduacao,
+            selections
         };
-    </script>
+
+        console.log('Form Data:', formData);
+
+        // Aqui você pode fazer a requisição para armazenar os dados em um banco de dados ou Google Sheets.
+        // Exemplo:
+        // fetch('URL_DO_SERVIDOR', {
+        //     method: 'POST',
+        //     body: JSON.stringify(formData),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     alert('Dados enviados com sucesso!');
+        // })
+        // .catch((error) => {
+        //     console.error('Erro:', error);
+        // });
+    });
+</script>
 
 </body>
 </html>
-

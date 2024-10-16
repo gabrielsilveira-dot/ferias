@@ -30,12 +30,12 @@
         input, select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #28a745;
             color: white;
             padding: 10px;
             border: none;
@@ -44,32 +44,31 @@
             width: 100%;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
+
     <h1>Opções de Férias 40ª Cia</h1>
-    <form id="dataForm" action="https://script.google.com/macros/s/AKfycbw9FrLOHc1ssq4MwGA0h_-kQF5pHKDJojKi-sb8Qjtnjw4B178LJB2CU9OelOW-TGBA/exec" method="post" onsubmit="return validateForm()">
-        <label for="numeroPM">Número da PM:</label>
+    <form id="formulario" action="https://script.google.com/macros/s/AKfycbw9FrLOHc1ssq4MwGA0h_-kQF5pHKDJojKi-sb8Qjtnjw4B178LJB2CU9OelOW-TGBA/exec" method="POST" onsubmit="return validateForm()">
+        <label for="numeroPM">Número de Polícia:</label>
         <input type="text" id="numeroPM" name="numeroPM" required>
 
         <label for="nome">Nome Militar:</label>
         <input type="text" id="nome" name="nome" required>
 
-        <label for="options">Opções de Férias:</label>
+        <label for="options">Escolha suas opções de férias:</label>
         <select id="options" name="option" multiple required>
-            <option value="2024-01-01">1 de Janeiro de 2024</option>
-            <option value="2024-01-15">15 de Janeiro de 2024</option>
-            <option value="2024-02-01">1 de Fevereiro de 2024</option>
-            <option value="2024-02-15">15 de Fevereiro de 2024</option>
-            <option value="2024-03-01">1 de Março de 2024</option>
-            <option value="2024-03-15">15 de Março de 2024</option>
-            <option value="2024-04-01">1 de Abril de 2024</option>
-            <option value="2024-04-15">15 de Abril de 2024</option>
+            <option value="01/01/2024">01/01/2024</option>
+            <option value="02/01/2024">02/01/2024</option>
+            <option value="03/01/2024">03/01/2024</option>
+            <option value="04/01/2024">04/01/2024</option>
+            <option value="05/01/2024">05/01/2024</option>
             <!-- Adicione mais opções conforme necessário -->
         </select>
-        <button type="submit">Enviar</button>
+
+        <button type="submit">Finalizar</button>
     </form>
 
     <script>

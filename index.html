@@ -52,7 +52,7 @@
 <body>
 
     <h1>Opções de Férias 40ª Cia</h1>
-    <form id="myForm" method="POST">
+    <form id="myForm" method="POST" action="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec">
         <label for="numeroPM">Número de Polícia:</label>
         <input type="text" id="numeroPM" name="numeroPM" required>
 
@@ -88,7 +88,7 @@
 
     <script>
         const form = document.getElementById('myForm');
-        const url = 'https://script.google.com/macros/s/AKfycbxetJO1tVGS4FzMmjj_D64-FgKOX3HYs1_YGARSK974LS-ZcSo3HggVtn60plR58X7VvA/exec'; // Substitua pela URL do seu script
+        const url = 'https://script.google.com/macros/s/AKfycbwTk6Fb6wXOgjXYqEQj--6ibw86w_dXe8-kAnQ3N-Pf1v_BA_dt6_o1EkyH-ELwuJ56ew/exec';
 
         form.onsubmit = async (e) => {
             e.preventDefault();
@@ -110,4 +110,3 @@
 
 </body>
 </html>
-

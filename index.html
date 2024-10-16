@@ -35,6 +35,9 @@
         button:hover {
             background-color: #218838;
         }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -125,7 +128,7 @@
                     addDateOptions(datas25Dias, 'select25Dias');
                     escolhaContador++;
                 } else {
-                    alert("Você já escolheu um período de 25 dias!");
+                    alert("Você já escolheu um período de 25 dias nesta escolha!");
                 }
             };
             optionDiv.appendChild(button25);
@@ -139,7 +142,7 @@
                     addDateOptions(datas15Dias, 'select10ou15Dias');
                     escolhaContador++;
                 } else {
-                    alert("Você já escolheu um período de 10 ou 15 dias!");
+                    alert("Você já escolheu um período de 10 ou 15 dias nesta escolha!");
                 }
             };
             optionDiv.appendChild(buttonDividida);
@@ -169,12 +172,39 @@
     document.getElementById('addChoice').addEventListener('click', addOptions);
 
     document.getElementById('finalizar').addEventListener('click', function() {
+        // Limpar mensagens de erro anteriores
+        const errorElements = document.querySelectorAll('.error');
+        errorElements.forEach(el => el.remove());
+
         const numeroPolicia = document.getElementById('numeroPolicia').value;
         const nomeMilitar = document.getElementById('nomeMilitar').value;
         const postoGraduacao = document.getElementById('postoGraduacao').value;
 
         const selections = Array.from(optionsContainer.getElementsByTagName('select'))
             .map(select => select.value);
+
+        // Validação dos campos
+        let hasError = false;
+        if (!numeroPolicia) {
+            alert("Número de Polícia é obrigatório.");
+            hasError = true;
+        }
+        if (!nomeMilitar) {
+            alert("Nome Militar é obrigatório.");
+            hasError = true;
+        }
+        if (!postoGraduacao) {
+            alert("Posto ou Graduação é obrigatório.");
+            hasError = true;
+        }
+        if (selections.includes("")) {
+            alert("Por favor, selecione todas as datas.");
+            hasError = true;
+        }
+
+        if (hasError) {
+            return; // Não enviar dados se houver erro
+        }
 
         const formData = {
             numeroPolicia,
@@ -195,6 +225,8 @@
             if (response.ok) {
                 alert('Dados enviados com sucesso!');
                 document.getElementById('feriasForm').reset(); // Limpa o formulário após o envio
+                optionsContainer.innerHTML = ''; // Limpa as escolhas
+                escolhaContador = 0; // Reinicia o contador de escolhas
             } else {
                 alert('Erro ao enviar os dados. Tente novamente.');
             }
@@ -208,4 +240,3 @@
 
 </body>
 </html>
-

@@ -172,24 +172,26 @@
             selections
         };
 
-        console.log('Form Data:', formData);
-
-        // Aqui você pode fazer a requisição para armazenar os dados em um banco de dados ou Google Sheets.
-        // Exemplo:
-        // fetch('URL_DO_SERVIDOR', {
-        //     method: 'POST',
-        //     body: JSON.stringify(formData),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     alert('Dados enviados com sucesso!');
-        // })
-        // .catch((error) => {
-        //     console.error('Erro:', error);
-        // });
+        // Enviar dados para o Google Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbwIkLzYWwxBPwP0T0ly1ya3N615EC_SmVNOrTR8H7YuEjY8r340pGP_MafSW4tAspg4/exec', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Dados enviados com sucesso!');
+                document.getElementById('feriasForm').reset(); // Limpa o formulário após o envio
+            } else {
+                alert('Erro ao enviar os dados. Tente novamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao enviar os dados. Tente novamente.');
+        });
     });
 </script>
 

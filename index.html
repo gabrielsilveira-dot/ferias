@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
         }
@@ -16,30 +16,31 @@
             color: #333;
         }
         form {
-            background-color: #fff;
+            background-color: white;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 500px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
             margin: auto;
         }
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin-bottom: 10px;
+            color: #555;
         }
-        input, select {
+        input[type="text"], select {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         button {
             background-color: #28a745;
             color: white;
             padding: 10px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             width: 100%;
         }
@@ -51,36 +52,67 @@
 <body>
 
     <h1>Opções de Férias 40ª Cia</h1>
-    <form id="formulario" action="https://script.google.com/macros/s/AKfycbw9FrLOHc1ssq4MwGA0h_-kQF5pHKDJojKi-sb8Qjtnjw4B178LJB2CU9OelOW-TGBA/exec" method="POST" onsubmit="return validateForm()">
+    <form id="myForm">
         <label for="numeroPM">Número de Polícia:</label>
         <input type="text" id="numeroPM" name="numeroPM" required>
 
         <label for="nome">Nome Militar:</label>
         <input type="text" id="nome" name="nome" required>
 
-        <label for="options">Escolha suas opções de férias:</label>
-        <select id="options" name="option" multiple required>
-            <option value="01/01/2024">01/01/2024</option>
-            <option value="02/01/2024">02/01/2024</option>
-            <option value="03/01/2024">03/01/2024</option>
-            <option value="04/01/2024">04/01/2024</option>
-            <option value="05/01/2024">05/01/2024</option>
-            <!-- Adicione mais opções conforme necessário -->
+        <label for="opcao1">Opção de Férias 1:</label>
+        <select id="opcao1" name="opcao1" required>
+            <option value="">Selecione uma data</option>
+            <option value="01/01/2025">01/01/2025</option>
+            <option value="15/01/2025">15/01/2025</option>
+            <option value="01/02/2025">01/02/2025</option>
+            <option value="01/03/2025">01/03/2025</option>
+            <option value="01/04/2025">01/04/2025</option>
+        </select>
+
+        <label for="opcao2">Opção de Férias 2:</label>
+        <select id="opcao2" name="opcao2" required>
+            <option value="">Selecione uma data</option>
+            <option value="01/01/2025">01/01/2025</option>
+            <option value="15/01/2025">15/01/2025</option>
+            <option value="01/02/2025">01/02/2025</option>
+            <option value="01/03/2025">01/03/2025</option>
+            <option value="01/04/2025">01/04/2025</option>
+        </select>
+
+        <label for="opcao3">Opção de Férias 3:</label>
+        <select id="opcao3" name="opcao3" required>
+            <option value="">Selecione uma data</option>
+            <option value="01/01/2025">01/01/2025</option>
+            <option value="15/01/2025">15/01/2025</option>
+            <option value="01/02/2025">01/02/2025</option>
+            <option value="01/03/2025">01/03/2025</option>
+            <option value="01/04/2025">01/04/2025</option>
         </select>
 
         <button type="submit">Finalizar</button>
     </form>
 
     <script>
-        function validateForm() {
-            const selectElement = document.getElementById('options');
-            const selectedOptions = Array.from(selectElement.selectedOptions);
-            if (selectedOptions.length > 3) {
-                alert('Por favor, selecione no máximo 3 opções de férias.');
-                return false; // Impede o envio do formulário
+        const form = document.getElementById('myForm');
+        const url = 'https://script.google.com/macros/s/AKfycbw9FrLOHc1ssq4MwGA0h_-kQF5pHKDJojKi-sb8Qjtnjw4B178LJB2CU9OelOW-TGBA/exec'; // URL do seu script
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.text();
+                alert(result);
+            } catch (error) {
+                alert("Erro ao enviar dados: " + error.message);
             }
-            return true; // Permite o envio do formulário
-        }
+        };
     </script>
+
 </body>
 </html>

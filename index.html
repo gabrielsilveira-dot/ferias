@@ -1,41 +1,122 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Inscrição</title>
+    <title>Opções de Férias - 40ª Cia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #004494;
+        }
+    </style>
 </head>
 <body>
-    <h1>Formulário de Inscrição</h1>
-    <form action="https://script.google.com/macros/s/AKfycbybCGv9JGPz6dpSuqLmQAr5vYrT3hgGoee6l9I6twzS/dev" method="POST">
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" required><br>
 
-        <label for="numeroPM">Número PM:</label>
-        <input type="text" name="numeroPM" required><br>
+    <h1>Opções de Férias - 40ª Cia</h1>
+    
+    <form id="form">
+        <label for="numeroPM">Número de Polícia:</label>
+        <input type="text" id="numeroPM" name="numeroPM" required>
 
-        <label for="opcao1">Opção de Férias 1:</label>
-        <select name="opcao1" required>
-            <option value="01/12/2024">01/12/2024</option>
-            <option value="15/01/2025">15/01/2025</option>
-            <option value="20/02/2025">20/02/2025</option>
-        </select><br>
+        <label for="nome">Nome Militar:</label>
+        <input type="text" id="nome" name="nome" required>
 
-        <label for="opcao2">Opção de Férias 2:</label>
-        <select name="opcao2" required>
-            <option value="01/12/2024">01/12/2024</option>
-            <option value="15/01/2025">15/01/2025</option>
-            <option value="20/02/2025">20/02/2025</option>
-        </select><br>
+        <label for="opcao1">Escolha a primeira data:</label>
+        <select id="opcao1" name="opcao1" required>
+            <option value="">Selecione uma data</option>
+            <option value="2024-01-01">01/01/2024</option>
+            <option value="2024-01-15">15/01/2024</option>
+            <option value="2024-02-01">01/02/2024</option>
+            <option value="2024-02-15">15/02/2024</option>
+            <option value="2024-03-01">01/03/2024</option>
+        </select>
 
-        <label for="opcao3">Opção de Férias 3:</label>
-        <select name="opcao3" required>
-            <option value="01/12/2024">01/12/2024</option>
-            <option value="15/01/2025">15/01/2025</option>
-            <option value="20/02/2025">20/02/2025</option>
-        </select><br>
+        <label for="opcao2">Escolha a segunda data:</label>
+        <select id="opcao2" name="opcao2" required>
+            <option value="">Selecione uma data</option>
+            <option value="2024-01-01">01/01/2024</option>
+            <option value="2024-01-15">15/01/2024</option>
+            <option value="2024-02-01">01/02/2024</option>
+            <option value="2024-02-15">15/02/2024</option>
+            <option value="2024-03-01">01/03/2024</option>
+        </select>
 
-        <input type="submit" value="Enviar">
+        <label for="opcao3">Escolha a terceira data:</label>
+        <select id="opcao3" name="opcao3" required>
+            <option value="">Selecione uma data</option>
+            <option value="2024-01-01">01/01/2024</option>
+            <option value="2024-01-15">15/01/2024</option>
+            <option value="2024-02-01">01/02/2024</option>
+            <option value="2024-02-15">15/02/2024</option>
+            <option value="2024-03-01">01/03/2024</option>
+        </select>
+
+        <input type="submit" value="Finalizar">
     </form>
+
+    <script>
+        document.getElementById('form').onsubmit = function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const url = 'https://script.google.com/macros/s/AKfycbybCGv9JGPz6dpSuqLmQAr5vYrT3hgGoee6l9I6twzS/dev'; // Substitua com o URL do seu Google Apps Script
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                event.target.reset(); // Limpar o formulário após o envio
+            })
+            .catch(error => {
+                alert('Erro: ' + error.message);
+            });
+        };
+    </script>
+
 </body>
 </html>

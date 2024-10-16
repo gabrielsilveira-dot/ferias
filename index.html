@@ -120,17 +120,27 @@
             const button25 = document.createElement('button');
             button25.innerText = "Escolher 25 Dias";
             button25.onclick = function() {
-                addDateOptions(datas25Dias);
-                escolhaContador++;
+                // Verifica se já existe uma escolha para 25 dias
+                if (!document.querySelector('.select25Dias')) {
+                    addDateOptions(datas25Dias, 'select25Dias');
+                    escolhaContador++;
+                } else {
+                    alert("Você já escolheu um período de 25 dias!");
+                }
             };
             optionDiv.appendChild(button25);
 
             const buttonDividida = document.createElement('button');
             buttonDividida.innerText = "Escolher 10 ou 15 Dias";
             buttonDividida.onclick = function() {
-                addDateOptions(datas10Dias);
-                addDateOptions(datas15Dias);
-                escolhaContador++;
+                // Verifica se já existe uma escolha para 10 ou 15 dias
+                if (!document.querySelector('.select10ou15Dias')) {
+                    addDateOptions(datas10Dias, 'select10ou15Dias');
+                    addDateOptions(datas15Dias, 'select10ou15Dias');
+                    escolhaContador++;
+                } else {
+                    alert("Você já escolheu um período de 10 ou 15 dias!");
+                }
             };
             optionDiv.appendChild(buttonDividida);
 
@@ -140,8 +150,9 @@
         }
     }
 
-    function addDateOptions(dataArray) {
+    function addDateOptions(dataArray, className) {
         const select = document.createElement('select');
+        select.className = className; // Adiciona uma classe para identificar
         select.required = true;
         select.innerHTML = "<option value=''>Selecione uma data</option>";
 
@@ -197,3 +208,4 @@
 
 </body>
 </html>
+

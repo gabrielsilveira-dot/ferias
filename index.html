@@ -120,32 +120,35 @@
             const optionDiv = document.createElement('div');
             optionDiv.className = 'form-group';
 
-            const button25 = document.createElement('button');
-            button25.innerText = "Escolher 25 Dias";
-            button25.onclick = function() {
-                // Verifica se já existe uma escolha para 25 dias
-                if (!document.querySelector('.select25Dias')) {
-                    addDateOptions(datas25Dias, 'select25Dias');
-                    escolhaContador++;
-                } else {
-                    alert("Você já escolheu um período de 25 dias nesta escolha!");
-                }
-            };
-            optionDiv.appendChild(button25);
+            const select = document.createElement('select');
+            select.innerHTML = "<option value=''>Escolher uma opção</option><option value='25'>Escolher 25 Dias</option><option value='10ou15'>Escolher 10 ou 15 Dias</option>";
+            select.required = true;
+            optionDiv.appendChild(select);
 
-            const buttonDividida = document.createElement('button');
-            buttonDividida.innerText = "Escolher 10 ou 15 Dias";
-            buttonDividida.onclick = function() {
-                // Verifica se já existe uma escolha para 10 ou 15 dias
-                if (!document.querySelector('.select10ou15Dias')) {
-                    addDateOptions(datas10Dias, 'select10ou15Dias');
-                    addDateOptions(datas15Dias, 'select10ou15Dias');
-                    escolhaContador++;
+            const buttonSubmit = document.createElement('button');
+            buttonSubmit.innerText = "Confirmar Escolha";
+            buttonSubmit.onclick = function() {
+                const selectedValue = select.value;
+                if (selectedValue === '25') {
+                    if (!document.querySelector('.select25Dias')) {
+                        addDateOptions(datas25Dias, 'select25Dias', optionDiv);
+                        escolhaContador++;
+                    } else {
+                        alert("Você já escolheu um período de 25 dias nesta escolha!");
+                    }
+                } else if (selectedValue === '10ou15') {
+                    if (!document.querySelector('.select10ou15Dias')) {
+                        addDateOptions(datas10Dias, 'select10ou15Dias', optionDiv);
+                        addDateOptions(datas15Dias, 'select10ou15Dias', optionDiv);
+                        escolhaContador++;
+                    } else {
+                        alert("Você já escolheu um período de 10 ou 15 dias nesta escolha!");
+                    }
                 } else {
-                    alert("Você já escolheu um período de 10 ou 15 dias nesta escolha!");
+                    alert("Por favor, escolha uma opção.");
                 }
             };
-            optionDiv.appendChild(buttonDividida);
+            optionDiv.appendChild(buttonSubmit);
 
             optionsContainer.appendChild(optionDiv);
         } else {
@@ -153,7 +156,7 @@
         }
     }
 
-    function addDateOptions(dataArray, className) {
+    function addDateOptions(dataArray, className, optionDiv) {
         const select = document.createElement('select');
         select.className = className; // Adiciona uma classe para identificar
         select.required = true;
@@ -166,16 +169,12 @@
             select.appendChild(option);
         });
 
-        optionsContainer.appendChild(select);
+        optionDiv.appendChild(select); // Adiciona o select à opção correspondente
     }
 
     document.getElementById('addChoice').addEventListener('click', addOptions);
 
     document.getElementById('finalizar').addEventListener('click', function() {
-        // Limpar mensagens de erro anteriores
-        const errorElements = document.querySelectorAll('.error');
-        errorElements.forEach(el => el.remove());
-
         const numeroPolicia = document.getElementById('numeroPolicia').value;
         const nomeMilitar = document.getElementById('nomeMilitar').value;
         const postoGraduacao = document.getElementById('postoGraduacao').value;
@@ -240,3 +239,4 @@
 
 </body>
 </html>
+
